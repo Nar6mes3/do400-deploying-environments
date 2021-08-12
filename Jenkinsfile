@@ -43,6 +43,7 @@ pipeline {
                   -Dquarkus.container-image.push=true
               '''
           }
+<<<<<<< HEAD
         }
         stage('Deploy - Stage') {
             environment {
@@ -58,4 +59,20 @@ pipeline {
             }
         }  
     }
+=======
+      }
+      stage('Deploy - Stage') {
+          environment {
+              APP_NAMESPACE = "${RHT_OCP4_DEV_USER}-shopping-cart-stage"
+          }
+          steps {
+              sh """
+                  oc set image \
+                  deployment ${DEPLOYMENT_STAGE} \
+                  shopping-cart-stage=quay.io/${QUAY_USR}/do400-deploying-environments:build-${BUILD_NUMBER} \
+                  -n ${APP_NAMESPACE} --record
+              """
+          }
+      }    
+>>>>>>> 5891ff4b8ddcf43c9c1fc176c825c52597548820
 }
